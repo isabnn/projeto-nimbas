@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="bibli.css">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap" rel='stylesheet'>
+
+  <title>Biblioteca</title>
+  
+</head>
+
+<body>
+  <header>Biblioteca Virtual</header>
+  <section>
+    <form id="register">
+      <h3>Cadastre um livro</h3>
+      <label for="bookName">Insira o nome do livro:</label>
+      <input type="text" name="bookName" id="bookName">
+      <label for="bookAuthor">Insira o autor do livro:</label>
+      <input type="text" name="bookAuthor" id="bookAuthor">
+      <label for="bookPublisher">Insira a editora do livro:</label>
+      <input type="text" name="bookPublisher" id="bookPublisher">
+      <label for="numberOfPages">Insira a quantidade de páginas:</label>
+      <input type="number" name="numberOfPages" id="numberOfPages">
+      <label for="bookCover">Insira o link da capa:</label>
+      <input type="text" name="bookCover" id="bookCover">
+      <label for="synopsis">Insira a sinopse:</label>
+      <textarea name="synopsis" id="synopsis" cols="50" rows="10"></textarea>
+      <button id="btnRegister">Cadastre</button>
+    </form>
+
+    <div id="myModal" class="modal">
+      <div id="contentModel" class="modal-content">
+        <span id="btnCloseModal">&times;</span>
+        <h3 id="modalTitle"></h3>
+        <p id="txtSynopsis"></p>
+      </div>
+    </div>
+
+    <div id="listOfBooksSearch">
+      <h3>Busque um livro</h3>
+      <label for="bookNameSearch">Digite o livro que deseja procurar:</label>
+      <input type="text" name="bookNameSearch" id="bookNameSearch">
+      <button id="btnSearch">Buscar</button>
+      <div id="foundBooks"></div>
+    </div>
+
+    <div id="AllBooks">
+      <h3 id="titleAllBooks">Todos os Livros</h3>
+      <div id="listOfAllBooks">
+        <p  id="emptyBookList">Nenhum livro cadastrado</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="/biblioteca.js"></script>
+
+  <script>let allBooks = []
+    const emptyBookList = document.querySelector("#emptyBookList")
+    const fields = document.querySelectorAll("input")
+    const modal = document.querySelector("#myModal")
+    const modalTitle = document.querySelector("#modalTitle")
+    const synopsis = document.querySelector("#synopsis")
+    const txtSynopsis = document.querySelector("#txtSynopsis")
+    const btnRegister = document.querySelector("#btnRegister")
+    const btnSearch = document.querySelector("#btnSearch")
+    
+    function findBook() {
+      return allBooks.findIndex((elem) => elem.bookName === (event.target.parentNode.className))
+    }
+    
+    function showSynopsis(event) {
+      if (event.target.id === "btnSinopsys") {
+        modalTitle.innerHTML = `Sinopse do livro "${allBooks[findBook()].bookName}"`
+        txtSynopsis.innerHTML = allBooks[findBook()].synopsis
+        modal.style.display = "block"
+      }
+    }
+    
+    function showError(bookName) {
+      const contentModel = document.querySelector("#contentModel")
+      modalTitle.innerHTML = `Livro "${bookName}" não encontrado!`
+      txtSynopsis.innerHTML = ""
+      contentModel.style.width = "50%"
+      modal.style.display = "block"
+    }
+    
+    function closeModal(event) {
+      modal.style.display = "none"
+    }
+    
+    function closeModalWindow(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+    
+    function clearFields() {
+      fields.forEach(function (elem) {
+        elem.value = ""
+      })
+      synopsis.value = ""
+    }
+    
+    function createCard(bookCard, bookName, bookAuthor, bookPublisher, numberOfPages, bookCover) {
+      bookCard.className = bookName
+      bookCard.innerHTML = `
+        <p id="bookTitle">${bookName}</p>
+        <img src="${bookCover}"/>
+        Autor: ${bookAuthor}
+        <br>Editora: ${bookPublisher}
+        <br>Págs: ${numberOfPages}
+        <button id="btnSinopsys">Sinopse</button>
+        <button id="btnRemove">Remover</button>
+        `
+    }
+    
+    function appendElements(divSelect, bookCard) {
+      const btnCloseModal = document.querySelector("#btnCloseModal")
+      divSelect.append(bookCard)
+      divSelect.addEventListener("click", showSynopsis)
+      btnCloseModal.addEventListener("click", closeModal)
+      window.addEventListener("click", closeModalWindow)
+    }
+    
+    function removeCard(parentDiv) {
+      return function remove(event) {
+        if (event.target.id === "btnRemove") {
+          parentDiv.removeChild(event.target.parentNode)
+          if (allBooks.splice(findBook(), 1)) {
+            alert(`Livro "${event.target.parentNode.className}" removido com sucesso!`)
+          }
+        }
+      }
+    }
+    
+    function registerBook() {
+      const listOfAllBooks = document.querySelector("#listOfAllBooks")
+      const bookName = document.querySelector("#bookName").value
+      const bookAuthor = document.querySelector("#bookAuthor").value
+      const bookPublisher = document.querySelector("#bookPublisher").value
+      const numberOfPages = Number(document.querySelector("#numberOfPages").value)
+      const bookCover = document.querySelector("#bookCover").value
+    
+      event.preventDefault()
+    
+      allBooks.push(
+        {
+          bookName,
+          bookAuthor,
+          bookPublisher,
+          numberOfPages,
+          bookCover,
+          synopsis: synopsis.value
+        })
+    
+      emptyBookList.remove()
+      const bookCard = document.createElement("div")
+    
+      createCard(bookCard, bookName, bookAuthor, bookPublisher, numberOfPages, bookCover)
+      appendElements(listOfAllBooks, bookCard)
+    
+      const remove = removeCard(listOfAllBooks)
+      listOfAllBooks.addEventListener("click", remove)
+    
+      clearFields()
+    }
+    
+    function searchBook() {
+      const bookNameSearch = document.querySelector("#bookNameSearch").value
+      const listOfBooksSearch = document.querySelector("#listOfBooksSearch")
+      const foundBooks = document.querySelector("#foundBooks")
+      const bookCard = document.createElement("div")
+    
+      foundBooks.innerHTML = ""
+      listOfBooksSearch.append(foundBooks)
+    
+      const findBook = allBooks.filter(elem => elem.bookName === bookNameSearch)
+    
+      if (findBook.length !== 0) {
+        findBook.forEach(elem => {
+          createCard(bookCard, elem.bookName, elem.bookAuthor, elem.bookPublisher, elem.numberOfPages, elem.bookCover)
+          appendElements(foundBooks, bookCard)
+        })
+      } else {
+        showError(bookNameSearch)
+      }
+    
+      const remove = removeCard(foundBooks)
+      listOfBooksSearch.addEventListener("click", remove)
+    
+      clearFields()
+    }
+    
+    btnRegister.addEventListener("click", registerBook)
+    btnSearch.addEventListener("click", searchBook)</script>
+</body>
+
+</html>

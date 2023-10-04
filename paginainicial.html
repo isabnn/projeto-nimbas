@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="paginainicial.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/dist/boxicons.js' rel='stylesheet'>
+    <title>Página Inicial</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="btn-abrir" onclick="abrirMenu()" >&#9776; Abrir</a>
+        <p>Página Inicial</p>
+        <!--quando o botão abrir for clicado, o menu será aberto por conta da função abrirMenu -->
+    </header>
+    <nav id="menu">
+        <a href="#" onclick="fecharMenu()">&times; Fechar</a>  <!--quando o link fechar for clicado, o menu será fechado por conta da função fecharMenu-->
+        <a href="#">Livros</a>
+        <a href="#">Periódicos</a>
+        <a href="#">Fichas Técnicas</a>
+        <a href="bibli.html">Cadastro de livros</a>
+        <a href="#">Sua Conta</a>
+    </nav>
+
+    <h3><img id="imagem" src="banner.png"></h3>
+    <h4><img id="imagem2" src="imglivro.jpg"> <img id="imagem3" src="imglivro2.jpg"></h4>
+
+    <main id="conteudo">
+        <h1>Bem-vindo (a)</h1>
+        <h2>Biblioteca Virtual SENAI</h2>
+        <p>slavei</p>
+
+    </main>
+
+    <script>
+        function abrirMenu() {
+            document.getElementById ('menu').style.width = '250px'; //através do get, que pega o elemento menu por meio do id e muda a largura dele, que quando clicado será de 250px e abre o menu
+            document.getElementById ('conteudo').style.marginLeft = '250px';
+            document.getElementById ('imagem').style.marginLeft = '300px';
+            document.getElementById ('imagem2').style.marginLeft = '350px';
+            document.getElementById ('imagem3').style.marginLeft = '800px';
+        }
+
+        function fecharMenu(){
+        document.getElementById ('menu').style.width = '0px'; //através do get, que pega o elemento menu por meio do id, quando clicado a largura retorna a 0px e fecha o menu
+        document.getElementById ('conteudo').style.marginLeft = '0px';
+        document.getElementById ('imagem').style.marginLeft = '190px';
+        document.getElementById ('imagem2').style.marginLeft = '243px';
+        document.getElementById ('imagem3').style.marginLeft = '715px';
+    }
+
+    </script>
+
+</body>
+</html>

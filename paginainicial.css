@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800;900&display=swap"); 
+
+*{
+    font-family: "Raleway", sans-serif;
+}
+
+body {
+    margin: 0%;
+}
+
+a{
+    text-decoration: none;
+}
+
+header{
+    background-color: rgb(255, 0, 0);
+    padding: 1px;
+}
+
+p{
+    margin-left: 90%;
+    margin-top: 0%;
+    transform: translateY(-110%);
+    color: white;
+}
+
+#imagem{
+    width: 74%;
+    height: 10%;
+    transform: translateY(3%);
+    margin-left: 14%;
+    margin-right: 20%;
+    transition: margin-left 0.4s;
+    box-shadow:  0 0 6px black;
+}
+
+#imagem2{
+    width: 30%;
+    height: 20%;
+    margin-left: 18%;
+    transform: translateY(3%);
+    transition: margin-left 0.4s;
+}
+#imagem3{
+    width: 30%;
+    height: 20%;
+    margin-left: 53%;
+    transform: translateY(-98%);
+    transition: margin-left 0.4s;
+   
+}
+
+
+
+
+.btn-abrir {
+    color: white;
+    font-size: 25px;
+}
+
+nav {
+    height: 100%;
+    width: 0px;
+    background-color: rgb(255, 0, 0);;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1; /*elemento sobrepõe outro elemento, então nenhum outro elemento da página ficará sobre o menu; só funciona para elementos com position definida*/
+    overflow: hidden; /*quando algum elemento de nav sair, ele esconde o elemento*/
+    transition: width 0.3s;
+}
+
+nav a {
+    color: white;
+    font-size: 25px;
+    display: block; /*cada elemento ocupa uma linha inteira diferente*/
+    padding: 12px 10px 12px 32px; /*padding superior, esquerda, direita, inferior*/
+}
+/*criar um evento*/
+nav a:hover{
+    color: rgb(255, 0, 0);
+    background-color: white;
+}
+
+main {
+    padding: 20px;
+    transition: margin-left 0.4s;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <h1><img src="SENAILOGO.png"></h1>
+    <div class="wrapper">
+        <form id="login-form">
+            <h1>Login</h1>
+            <h3>Indentifique-se para prosseguir</h3>
+            <br><br>
+            <div class="input-box">
+                <input type="text" id="usuario" placeholder="Usuário" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <br>
+            <div class="input-box">
+                <input type="password" id="senha" placeholder="Senha" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+
+            <div class="Entrar">
+                <button type="button" class="btn" onclick="entrar()">Entrar</button>
+            </div>
+
+            <div class="register-link">
+                <p><br>Você não tem uma conta? <a href="cadastro.html">Cadastre-se</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function entrar() {
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+
+            const usuariosPermitidos = {
+                'Isabelle': '123',
+                'Maria Clara': '321',
+                'Vitor': '111',
+                'Felipe': '222'
+            };
+
+            if (usuariosPermitidos[usuario] === senha) {
+                window.location.href = 'paginainicial.html';
+            } else {
+                alert('Senha e/ou usuário incorretos. Tente novamente.');
+            }
+        }
+    </script>
+</body>
+
+</html>
